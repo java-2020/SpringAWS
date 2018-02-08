@@ -6,14 +6,21 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @EnableJpaAuditing
 @SpringBootApplication
-public class Application {
+public class Application extends SpringBootServletInitializer{
 
 	private static final Logger log = LoggerFactory.getLogger(Application.class);
 
+	@Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(Application.class);
+    }
+	
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class);
 	}
@@ -22,7 +29,7 @@ public class Application {
 	public CommandLineRunner demo(CustomerRepository repository) {
 		return (args) -> {
 			// save a couple of customers
-			/*repository.save(new Customer("Jack", "Bauer"));
+			repository.save(new Customer("Jack", "Bauer"));
 			repository.save(new Customer("Chloe", "O'Brian"));
 			repository.save(new Customer("Kim", "Bauer"));
 			repository.save(new Customer("David", "Palmer"));
@@ -49,7 +56,6 @@ public class Application {
 			for (Customer bauer : repository.findByLastName("Bauer")) {
 				log.info(bauer.toString());
 			}
-			*/
 			log.info("");
 		};
 	}

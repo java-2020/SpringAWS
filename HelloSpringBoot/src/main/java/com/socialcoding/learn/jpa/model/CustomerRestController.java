@@ -1,11 +1,13 @@
 package com.socialcoding.learn.jpa.model;
 
+import java.awt.PageAttributes.MediaType;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,9 +17,7 @@ public class CustomerRestController {
 	CustomerRepository repository;
 	
 
-	@RequestMapping("/add")
-	//to-do : produces...json/xml
-	//post
+	@RequestMapping(value="/add",method=RequestMethod.GET,produces = { "application/json", "application/xml" })
 	public String addCustomer(@RequestParam("fname") String fName,@RequestParam("lname") String lastName){
 		repository.save(new Customer(fName, lastName));
 		return "Done";
