@@ -17,7 +17,7 @@ public class CustomerRestController {
 	CustomerRepository repository;
 	
 
-	@RequestMapping(value="/add",method=RequestMethod.GET,produces = { "application/json", "application/xml" })
+	@RequestMapping(value="/add",method=RequestMethod.POST,produces = { "application/json", "application/xml" })
 	public String addCustomer(@RequestParam("fname") String fName,@RequestParam("lname") String lastName){
 		repository.save(new Customer(fName, lastName));
 		return "Done";
@@ -48,7 +48,9 @@ public class CustomerRestController {
 		return result;
 	}
 	
-	@RequestMapping("/findall")
+	
+
+	@RequestMapping(value="/findall",method=RequestMethod.POST,produces = { "application/json", "application/xml" })
 	public String findAll(){
 		String result = "";
 		
