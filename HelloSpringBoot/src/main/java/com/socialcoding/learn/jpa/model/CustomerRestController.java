@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,6 +19,7 @@ public class CustomerRestController {
 	CustomerRepository repository;
 	
 
+	
 	@RequestMapping(value="/add",method=RequestMethod.POST,produces = { "application/json", "application/xml" })
 	public String addCustomer(@RequestParam("fname") String fName,@RequestParam("lname") String lastName){
 		repository.save(new Customer(fName, lastName));
@@ -50,16 +53,18 @@ public class CustomerRestController {
 	
 	
 
-	@RequestMapping(value="/findall",method=RequestMethod.POST,produces = { "application/json", "application/xml" })
-	public String findAll(){
+	
+	
+	@RequestMapping(value="/findall",method=RequestMethod.GET,produces = { "application/json", "application/xml" })
+	public ResponseEntity<String> findAll(){
 		String result = "";
 		
 		for(Customer cust : repository.findAll()){
 			result += cust.toString() + "<br>";
 		}
 		
-		
-		return result;
+		return new ResponseEntity<String>(result,HttpStatus.OK);
+		//return result;
 	}
 
 }
